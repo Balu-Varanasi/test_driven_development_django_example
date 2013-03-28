@@ -5,17 +5,26 @@ when you run "manage.py test".
 Replace this with more appropriate tests for your application.
 """
 
-
 from django.test import LiveServerTestCase
-from selenium.webdriver.firefox.webdriver import WebDriver
+from django.contrib.auth.models import User
 
+from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.common.keys import Keys
+
 
 class PollsTest(LiveServerTestCase):
 
-    fixtures = ['admin_user.json']
-
     def setUp(self):
+
+        user = User()
+        user.username = "admin"
+        user.email = "admin@example.com"
+        user.set_password("adm1n")
+        user.is_active = True
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+        
         self.browser = WebDriver()
         self.browser.implicitly_wait(3)
     
@@ -37,6 +46,7 @@ class PollsTest(LiveServerTestCase):
 
         password_field = self.browser.find_element_by_name('password')
         password_field.send_keys('adm1n')
+
         password_field.send_keys(Keys.RETURN)
 
         # her username and password are accepted, and she is taken to
