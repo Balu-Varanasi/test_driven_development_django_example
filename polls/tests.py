@@ -7,7 +7,8 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from django.utils import timezone
-from polls.models import Poll
+
+from polls.models import Choice, Poll
 
 class PollModelTest(TestCase):
     def test_creating_a_new_poll_and_saving_it_to_the_database(self):
